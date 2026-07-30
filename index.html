@@ -2428,7 +2428,10 @@
 
       window.addEventListener('message', event => {
         if (event.origin !== window.location.origin) return;
-        if (event.data?.type === 'kagirov-home-workout-expand') openFullscreen();
+        if (event.data?.type === 'kagirov-home-workout-expand') {
+          platform.classList.toggle('home-screen', event.data?.screen !== 'program');
+          openFullscreen();
+        }
         if (event.data?.type === 'kagirov-home-workout-collapse') closeFullscreen();
         if (event.data?.type === 'kagirov-home-workout-screen') {
           platform.classList.toggle('home-screen', event.data.screen === 'home');
