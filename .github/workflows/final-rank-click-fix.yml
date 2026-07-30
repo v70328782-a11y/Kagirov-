@@ -1,0 +1,29 @@
+name: Final rank click fix
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/final_rank_click_fix.py"
+      - ".github/workflows/final-rank-click-fix.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/final_rank_click_fix.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add home-workout.html index.html
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Make Home Workout rank selection reliable"
+            git push
+          fi
