@@ -2408,11 +2408,12 @@
         } catch (error) {}
       }
 
-      function openFullscreen() {
+      function openFullscreen(screen) {
+        if (screen === 'program') platform.classList.remove('home-screen');
+        if (screen === 'home') platform.classList.add('home-screen');
         if (platform.classList.contains('fullscreen')) return;
         document.body.classList.add('home-workout-fullscreen');
         platform.classList.add('fullscreen');
-        platform.classList.add('home-screen');
         const frame = platform.querySelector('.workout-platform-frame');
         if (frame) {
           frame.style.opacity = '1';
@@ -2429,8 +2430,7 @@
       window.addEventListener('message', event => {
         if (event.origin !== window.location.origin) return;
         if (event.data?.type === 'kagirov-home-workout-expand') {
-          platform.classList.toggle('home-screen', event.data?.screen !== 'program');
-          openFullscreen();
+          openFullscreen(event.data?.screen || 'home');
         }
         if (event.data?.type === 'kagirov-home-workout-collapse') closeFullscreen();
         if (event.data?.type === 'kagirov-home-workout-screen') {
