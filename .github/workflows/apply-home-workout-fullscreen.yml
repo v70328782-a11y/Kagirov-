@@ -1,0 +1,34 @@
+name: Apply Home Workout fullscreen
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/add_home_workout_fullscreen.py"
+      - ".github/workflows/apply-home-workout-fullscreen.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply fullscreen patch
+        run: python scripts/add_home_workout_fullscreen.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html home-workout.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Open Home Workout hero in fullscreen"
+            git push
+          fi
