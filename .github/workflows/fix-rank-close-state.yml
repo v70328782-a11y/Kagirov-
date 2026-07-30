@@ -1,0 +1,29 @@
+name: Fix rank close state
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/fix_rank_close_state.py"
+      - ".github/workflows/fix-rank-close-state.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/fix_rank_close_state.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "4189826+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Fix close button state for direct rank opening"
+            git push
+          fi
