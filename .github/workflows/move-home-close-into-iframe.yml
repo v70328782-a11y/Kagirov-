@@ -1,0 +1,31 @@
+name: Move Home Workout close button into iframe
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/move_home_close_into_iframe.py"
+      - ".github/workflows/move-home-close-into-iframe.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply robust close-button fix
+        run: python scripts/move_home_close_into_iframe.py
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html home-workout.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Move Home Workout close button into home screen"
+            git push
+          fi
