@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#e7d3c0" />
+  <title>Домашняя тренировка</title>
+  <style>
+    :root{
+      --bg:#e7d3c0;
+      --bg-2:#d9bca2;
+      --card:#fffdf9;
+      --card-2:#f8f0e8;
+      --text:#5b4030;
+      --muted:#846552;
+      --soft:#a48774;
+      --accent:#835d45;
+      --accent-dark:#65432f;
+      --accent-soft:#ead8c8;
+      --line:rgba(101,67,47,.12);
+      --shadow:0 18px 45px rgba(83,53,34,.12),0 4px 14px rgba(83,53,34,.07);
+      --shadow-sm:0 9px 24px rgba(83,53,34,.09);
+      --radius-xl:32px;
+      --radius-lg:25px;
+      --radius-md:18px;
+      --safe-top:env(safe-area-inset-top,0px);
+      --safe-bottom:env(safe-area-inset-bottom,0px);
+      --selected:#8f6a50;
+      --selected-dark:#674631;
+      --selected-soft:#ead9cb;
+      --success:#6f805f;
+      --danger:#a45248;
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 0%,rgba(255,255,255,.45),transparent 34%),
+        radial-gradient(circle at 100% 38%,rgba(255,255,255,.22),transparent 38%),
+        linear-gradient(145deg,#f0e2d5 0%,var(--bg) 43%,var(--bg-2) 100%);
+      background-attachment:fixed;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    button,input{font:inherit}
+    button{color:inherit}
+    button:focus-visible,input:focus-visible{outline:3px solid rgba(131,93,69,.24);outline-offset:3px}
+
+    .app{
+      width:min(100%,780px);
+      min-height:100vh;
+      margin:0 auto;
+      padding:calc(18px + var(--safe-top)) 16px calc(40px + var(--safe-bottom));
+    }
+
+    .screen{display:none;animation:screenIn .4s ease}
+    .screen.active{display:block}
+    @keyframes screenIn{
+      from{opacity:0;transform:translateY(12px)}
+      to{opacity:1;transform:none}
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      min-height:280px;
+      padding:28px 25px;
+      border:1px solid rgba(255,255,255,.62);
+      border-radius:var(--radius-xl);
+      background:linear-gradient(145deg,rgba(255,253,249,.96),rgba(255,253,249,.8));
+      box-shadow:var(--shadow);
+    }
+    .hero::before,.hero::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+    }
+    .hero::before{
+      width:210px;height:210px;right:-80px;top:-90px;
+      background:rgba(231,211,192,.62);
+    }
+    .hero::after{
+      width:145px;height:145px;right:40px;bottom:-82px;
+      background:rgba(217,188,162,.28);
+    }
+    .hero-content{position:relative;z-index:2}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:31px;
+      padding:6px 11px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--accent);
+      background:var(--accent-soft);
+      font-size:11px;
+      font-weight:850;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+    .badge-dot{
+      width:7px;height:7px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 0 5px rgba(131,93,69,.11);
+    }
+    .hero h1{
+      max-width:580px;
+      margin:24px 0 0;
+      font-size:clamp(36px,9vw,58px);
+      line-height:.96;
+      letter-spacing:-.055em;
+    }
+    .hero h1 span{display:block;color:var(--accent)}
+    .hero p{
+      max-width:570px;
+      margin:18px 0 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.62;
+    }
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:22px;
+    }
+    .hero-tags span{
+      padding:8px 11px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      color:var(--muted);
+      background:rgba(255,255,255,.63);
+      font-size:12px;
+      font-weight:760;
+    }
+
+    .section-heading{margin:30px 4px 15px}
+    .section-heading h2{margin:0;font-size:23px;letter-spacing:-.035em}
+    .section-heading p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+
+    .level-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+    .level-card{
+      position:relative;
+      min-height:238px;
+      overflow:hidden;
+      padding:19px;
+      border:1px solid rgba(255,255,255,.66);
+      border-radius:var(--radius-lg);
+      text-align:left;
+      background:var(--card);
+      box-shadow:var(--shadow-sm);
+      cursor:pointer;
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .level-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .level-card:active{transform:scale(.98)}
+    .level-card::after{
+      content:"";
+      position:absolute;
+      width:96px;height:96px;
+      right:-34px;bottom:-34px;
+      border-radius:50%;
+      background:var(--level-soft);
+    }
+    .level-number{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;height:40px;
+      border-radius:13px;
+      color:#fff;
+      background:var(--level-color);
+      font-size:13px;
+      font-weight:900;
+    }
+    .level-kicker{
+      margin-top:22px;
+      color:var(--soft);
+      font-size:10px;
+      font-weight:850;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+    .level-name{
+      display:block;
+      margin-top:5px;
+      font-size:clamp(19px,5vw,25px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+    .level-description{
+      min-height:42px;
+      margin-top:9px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .level-meta{
+      position:relative;
+      z-index:2;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:16px;
+    }
+    .level-meta span{
+      padding:6px 8px;
+      border-radius:9px;
+      color:var(--muted);
+      background:var(--card-2);
+      font-size:10px;
+      font-weight:800;
+    }
+    .level-arrow{
+      position:absolute;
+      z-index:3;
+      right:17px;bottom:17px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;height:34px;
+      border-radius:50%;
+      color:var(--level-color);
+      background:#fff;
+      box-shadow:0 7px 18px rgba(89,63,47,.1);
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .info-card{
+      margin-top:16px;
+      padding:20px;
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:var(--radius-lg);
+      background:rgba(255,253,249,.84);
+      box-shadow:var(--shadow-sm);
+    }
+    .info-card.warning{border-color:rgba(164,82,72,.13)}
+    .info-title{display:flex;align-items:center;gap:10px;margin:0;font-size:15px}
+    .info-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;color:var(--accent);background:var(--accent-soft);font-weight:900}
+    .warning .info-icon{color:var(--danger);background:rgba(164,82,72,.1)}
+    .info-card p{margin:12px 0 0;color:var(--muted);font-size:13px;line-height:1.58}
+
+    .topbar{position:sticky;top:10px;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px;padding:10px;border:1px solid rgba(255,255,255,.65);border-radius:21px;background:rgba(255,253,249,.86);box-shadow:var(--shadow-sm);backdrop-filter:blur(18px)}
+    .icon-btn{display:flex;align-items:center;justify-content:center;width:43px;height:43px;padding:0;border:0;border-radius:14px;color:var(--accent-dark);background:var(--accent-soft);cursor:pointer}
+    .topbar-center{text-align:center}.topbar-center small{display:block;color:var(--soft);font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.topbar-center strong{display:block;margin-top:3px;font-size:14px}
+
+    .program-hero{position:relative;overflow:hidden;padding:26px;border-radius:var(--radius-xl);color:#fff;background:linear-gradient(145deg,var(--selected),var(--selected-dark));box-shadow:var(--shadow)}
+    .program-hero::before{content:"";position:absolute;width:215px;height:215px;right:-90px;top:-95px;border-radius:50%;background:rgba(255,255,255,.1)}
+    .program-hero-content{position:relative;z-index:2}
+    .rank{display:inline-flex;align-items:center;min-height:31px;padding:7px 11px;border:1px solid rgba(255,255,255,.17);border-radius:999px;background:rgba(255,255,255,.12);font-size:10px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+    .program-title{margin:18px 0 0;font-size:clamp(36px,10vw,54px);line-height:.97;letter-spacing:-.055em}
+    .program-subtitle{max-width:560px;margin:13px 0 0;color:rgba(255,255,255,.8);font-size:14px;line-height:1.56}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:22px}
+    .stat{padding:12px 10px;border:1px solid rgba(255,255,255,.13);border-radius:15px;background:rgba(255,255,255,.1)}
+    .stat small{display:block;color:rgba(255,255,255,.65);font-size:8px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+    .stat strong{display:block;margin-top:5px;font-size:13px}
+    .timer-launch{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:52px;margin-top:16px;border:1px solid rgba(255,255,255,.34);border-radius:17px;color:var(--selected-dark);background:#fff;font-size:13px;font-weight:850;cursor:pointer}
+
+    .progress-card{margin-top:13px;padding:16px;border:1px solid rgba(255,255,255,.6);border-radius:var(--radius-lg);background:rgba(255,253,249,.88);box-shadow:var(--shadow-sm)}
+    .progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.progress-head strong{font-size:13px}.progress-head span{color:var(--muted);font-size:12px;font-weight:760}
+    .progress-track{height:8px;margin-top:11px;overflow:hidden;border-radius:999px;background:var(--accent-soft)}
+    .progress-fill{width:0;height:100%;border-radius:inherit;background:var(--selected);transition:width .35s ease}
+
+    .program-section{margin-top:16px;border:1px solid rgba(255,255,255,.6);border-radius:var(--radius-lg);background:rgba(255,253,249,.91);box-shadow:var(--shadow-sm)}
+    .section-toggle{display:flex;align-items:center;width:100%;min-height:78px;padding:15px 16px;border:0;border-radius:inherit;text-align:left;background:transparent;cursor:pointer}
+    .section-index{display:flex;align-items:center;justify-content:center;width:43px;height:43px;border-radius:14px;color:var(--selected-dark);background:var(--selected-soft);font-size:12px;font-weight:900}
+    .section-toggle-text{min-width:0;margin-left:13px}.section-toggle-text strong{display:block;font-size:16px}.section-toggle-text small{display:block;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.35}
+    .chevron{margin-left:auto;color:var(--soft);font-size:19px;transition:transform .25s ease}.program-section.open .chevron{transform:rotate(180deg)}
+    .section-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .33s ease}.program-section.open .section-body{grid-template-rows:1fr}.section-inner{min-height:0;overflow:hidden}.section-content{padding:0 15px 17px}
+    .instruction{margin:0 0 12px;padding:13px;border-radius:15px;color:var(--muted);background:var(--card-2);font-size:12px;line-height:1.56}
+
+    .exercise-list{display:grid;gap:10px}
+    .exercise-card{position:relative;padding:15px;border:1px solid var(--line);border-radius:var(--radius-md);background:#fff;transition:opacity .25s ease,background .25s ease}
+    .exercise-card.completed{opacity:.64;background:#f2f5ef}.exercise-card.completed .exercise-title{text-decoration:line-through}
+    .exercise-top{display:flex;align-items:flex-start;gap:11px}.exercise-number{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:11px;color:var(--selected-dark);background:var(--selected-soft);font-size:11px;font-weight:900}
+    .exercise-heading{min-width:0;flex:1}.exercise-title{display:block;font-size:14px;line-height:1.25}.exercise-dose{display:inline-flex;margin-top:6px;padding:5px 8px;border-radius:8px;color:var(--selected-dark);background:var(--selected-soft);font-size:10px;font-weight:850}
+    .check-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border:1px solid var(--line);border-radius:11px;color:var(--soft);background:var(--card-2);cursor:pointer}.exercise-card.completed .check-btn{border-color:transparent;color:#fff;background:var(--success)}
+    .exercise-description{margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.58}
+    .technique-list{display:grid;gap:6px;margin:11px 0 0;padding:0;list-style:none}.technique-list li{position:relative;padding-left:14px;color:var(--muted);font-size:11px;line-height:1.48}.technique-list li::before{content:"";position:absolute;left:1px;top:7px;width:5px;height:5px;border-radius:50%;background:var(--selected)}
+    .variation{margin-top:11px;padding:10px 11px;border-left:3px solid var(--selected);border-radius:0 11px 11px 0;color:var(--muted);background:var(--card-2);font-size:11px;line-height:1.5}.variation strong{color:var(--text)}
+
+    .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:12px}.mini-card{min-height:105px;padding:13px;border:1px solid var(--line);border-radius:16px;background:#fff}.mini-card small{color:var(--soft);font-size:9px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}.mini-card strong{display:block;margin-top:8px;font-size:13px}.mini-card span{display:block;margin-top:7px;color:var(--selected-dark);font-size:12px;font-weight:850}
+    .quote-card{margin-top:17px;padding:24px 21px;border-radius:var(--radius-xl);color:#fff;background:linear-gradient(145deg,var(--accent),var(--accent-dark));box-shadow:var(--shadow)}.quote-card small{color:rgba(255,255,255,.64);font-size:9px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.quote-card p{margin:11px 0 0;font-size:19px;font-weight:760;line-height:1.35}
+    .reset-btn{width:100%;min-height:48px;margin-top:14px;border:1px solid rgba(101,67,47,.15);border-radius:16px;color:var(--muted);background:rgba(255,253,249,.75);font-size:12px;font-weight:800;cursor:pointer}
+
+    .timer-overlay{position:fixed;inset:0;z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:18px 14px calc(14px + var(--safe-bottom));visibility:hidden;opacity:0;background:rgba(63,42,29,.39);backdrop-filter:blur(9px);transition:opacity .25s ease,visibility .25s ease}.timer-overlay.visible{visibility:visible;opacity:1}
+    .timer-panel{width:min(100%,570px);max-height:92vh;overflow:auto;padding:18px;border:1px solid rgba(255,255,255,.72);border-radius:31px;background:var(--card);box-shadow:0 30px 90px rgba(62,38,24,.32);transform:translateY(30px);transition:transform .28s ease}.timer-overlay.visible .timer-panel{transform:none}
+    .timer-header{display:flex;align-items:center;justify-content:space-between;gap:12px}.timer-header small{display:block;color:var(--soft);font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}.timer-header strong{display:block;margin-top:4px;font-size:18px}
+    .timer-display{margin-top:18px;padding:27px 14px;border-radius:25px;text-align:center;background:linear-gradient(145deg,var(--selected-soft),#f9f2ea)}.timer-phase{min-height:22px;color:var(--selected-dark);font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.timer-time{margin-top:5px;font-variant-numeric:tabular-nums;font-size:clamp(66px,19vw,96px);font-weight:830;line-height:1;letter-spacing:-.075em}.timer-round{margin-top:10px;color:var(--muted);font-size:12px;font-weight:760}
+    .timer-settings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:15px}.timer-setting{padding:12px 8px;border:1px solid var(--line);border-radius:15px;text-align:center;background:var(--card-2)}.timer-setting label{display:block;color:var(--soft);font-size:8px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}.timer-setting input{width:100%;margin-top:7px;padding:0;border:0;text-align:center;color:var(--text);background:transparent;font-size:20px;font-weight:850}
+    .timer-controls{display:grid;grid-template-columns:1fr 1.45fr 1fr;gap:9px;margin-top:14px}.timer-control{min-height:51px;border:0;border-radius:16px;font-size:12px;font-weight:850;cursor:pointer}.timer-control.secondary{color:var(--muted);background:var(--card-2)}.timer-control.primary{color:#fff;background:var(--selected)}
+    .toast{position:fixed;left:50%;bottom:25px;z-index:200;max-width:calc(100% - 30px);padding:12px 16px;border-radius:14px;color:#fff;background:rgba(74,49,34,.94);font-size:12px;font-weight:760;text-align:center;opacity:0;pointer-events:none;transform:translate(-50%,20px);transition:opacity .25s ease,transform .25s ease}.toast.visible{opacity:1;transform:translate(-50%,0)}
+    .footer{padding:28px 10px 3px;color:rgba(89,63,47,.63);text-align:center;font-size:10px;line-height:1.6}
+
+    @media(max-width:410px){.app{padding-left:12px;padding-right:12px}.hero{padding:23px 20px}.level-grid{gap:9px}.level-card{min-height:226px;padding:16px}.program-hero{padding:22px 19px}}
+    @media(min-width:690px){.level-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.level-card{min-height:260px}.hero{padding:36px}.program-hero{padding:34px}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section id="homeScreen" class="screen active">
+      <article class="hero">
+        <div class="hero-content">
+          <div class="badge"><span class="badge-dot"></span>kagirov</div>
+          <h1>Домашняя <span>кросс-фит тренировка</span></h1>
+          <p>Полноценная тренировка без оборудования и без необходимости перемещаться по комнате. Достаточно свободного участка примерно 1 × 2 метра, собственного веса и строгой техники.</p>
+          <div class="hero-tags"><span>Без инвентаря</span><span>На одном месте</span><span>Всё тело</span><span>4 ранга</span><span>Интервальный таймер</span></div>
+        </div>
+      </article>
+      <div class="section-heading"><h2>Выбери свой ранг</h2><p>Начинай с уровня, на котором сохраняешь полную амплитуду, дыхание и контроль до конца.</p></div>
+      <div id="levelGrid" class="level-grid"></div>
+      <article class="info-card"><h3 class="info-title"><span class="info-icon">◆</span>Главный принцип</h3><p>Элитная выдержка — это не хаотичная скорость. Это способность продолжать точную работу, когда мышцы устали, дыхание стало тяжёлым, а тело требует остановки.</p></article>
+      <article class="info-card warning"><h3 class="info-title"><span class="info-icon">!</span>Контроль безопасности</h3><p>Остановись при резкой суставной боли, головокружении, потемнении в глазах, боли в груди, тошноте или необычной нехватке воздуха.</p></article>
+      <footer class="footer">kagirov<br>Сила · контроль · выдержка</footer>
+    </section>
+
+    <section id="programScreen" class="screen">
+      <header class="topbar"><button id="backButton" class="icon-btn" type="button">←</button><div class="topbar-center"><small>Выбранный ранг</small><strong id="topbarLevelName">Калибровка</strong></div><button id="topTimerButton" class="icon-btn" type="button">◷</button></header>
+      <article class="program-hero"><div class="program-hero-content"><div id="rankLabel" class="rank">Ранг I</div><h1 id="programTitle" class="program-title">Калибровка</h1><p id="programSubtitle" class="program-subtitle"></p><div class="stats"><div class="stat"><small>Длительность</small><strong id="durationStat"></strong></div><div class="stat"><small>Работа</small><strong id="workStat"></strong></div><div class="stat"><small>Отдых</small><strong id="restStat"></strong></div></div><button id="heroTimerButton" class="timer-launch" type="button">◷ Запустить интервальный таймер</button></div></article>
+      <article class="progress-card"><div class="progress-head"><strong>Прогресс тренировки</strong><span id="progressText">0 из 0</span></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div></article>
+      <div id="programSections"></div>
+      <article class="quote-card"><small>ДОМАШНЯЯ ТРЕНИРОВКА</small><p>Сохрани форму, дыхание и контроль до последнего качественного повторения.</p></article>
+      <button id="resetProgressButton" class="reset-btn" type="button">Сбросить отметки тренировки</button>
+    </section>
+  </main>
+
+  <div id="timerOverlay" class="timer-overlay" aria-hidden="true"><section class="timer-panel"><header class="timer-header"><div><small>Интервальный протокол</small><strong>Таймер тренировки</strong></div><button id="closeTimerButton" class="icon-btn" type="button">×</button></header><div class="timer-display"><div id="timerPhase" class="timer-phase">Готовность</div><div id="timerTime" class="timer-time">00:30</div><div id="timerRound" class="timer-round">Круг 1 из 2</div></div><div class="timer-settings"><div class="timer-setting"><label>Работа</label><input id="workInput" type="number" value="30"></div><div class="timer-setting"><label>Отдых</label><input id="restInput" type="number" value="30"></div><div class="timer-setting"><label>Круги</label><input id="roundInput" type="number" value="2"></div></div><div class="timer-controls"><button id="resetTimerButton" class="timer-control secondary">Сброс</button><button id="startTimerButton" class="timer-control primary">Старт</button><button id="skipTimerButton" class="timer-control secondary">Далее</button></div></section></div>
+  <div id="toast" class="toast"></div>
+
+  <script>
+    "use strict";
+    const levels={
+      calibration:{id:"calibration",rank:"Ранг I",number:"I",name:"Калибровка",short:"Вход в систему",description:"Освоение техники, дыхания и базовой физической выдержки.",subtitle:"Точный старт: контроль движений, устойчивый темп и подготовка к серьёзной нагрузке.",duration:"35–40 мин",work:30,rest:30,strengthRounds:2,strengthRoundRest:90,engineRounds:2,controlRounds:2,finisherMinutes:3,burpees:"6 без прыжка",climbers:"24 движения",walkouts:"5 повторений",punches:"40 ударов",color:"#9a765d",dark:"#78543f",soft:"#eaded4"},
+      vanguard:{id:"vanguard",rank:"Ранг II",number:"II",name:"Авангард",short:"Рабочий стандарт",description:"Уверенная нагрузка для развития силы и общего двигателя.",subtitle:"Сбалансированный рабочий уровень для роста силы, выносливости и контроля.",duration:"50–55 мин",work:40,rest:20,strengthRounds:3,strengthRoundRest:75,engineRounds:3,controlRounds:3,finisherMinutes:4,burpees:"8 повторений",climbers:"32 движения",walkouts:"7 повторений",punches:"50 ударов",color:"#8c654d",dark:"#694633",soft:"#e7d7ca"},
+      assault:{id:"assault",rank:"Ранг III",number:"III",name:"Штурм",short:"Тяжёлый протокол",description:"Высокий объём, короткий отдых и контроль на фоне сильной усталости.",subtitle:"Тяжёлый протокол для подготовленного человека с устойчивой техникой.",duration:"60–70 мин",work:45,rest:15,strengthRounds:4,strengthRoundRest:60,engineRounds:4,controlRounds:3,finisherMinutes:5,burpees:"10 повторений",climbers:"40 движений",walkouts:"9 повторений",punches:"60 ударов",color:"#7e5943",dark:"#5d3d2d",soft:"#e4d2c4"},
+      absolute:{id:"absolute",rank:"Ранг IV",number:"IV",name:"Абсолют",short:"Элитный предел",description:"Максимальный ранг для человека с исключительной выдержкой.",subtitle:"Предельная версия системы. Только для подготовленного тела и чистой техники.",duration:"80–90 мин",work:50,rest:10,strengthRounds:5,strengthRoundRest:45,engineRounds:5,controlRounds:4,finisherMinutes:7,burpees:"12 повторений",climbers:"50 движений",walkouts:"11 повторений",punches:"70 ударов",color:"#6d4936",dark:"#4d3023",soft:"#dfcbbd"}
+    };
+
+    const warmupExercises=[
+      {title:"Подъёмы на носки с работой рук",dose:"60 секунд",description:"Разогревают голеностоп, икроножные мышцы и плечевой пояс.",technique:["Поставь стопы на ширине таза.","Плавно поднимайся на носки.","Одновременно поднимай руки вверх.","Опускай пятки мягко."]},
+      {title:"Круговые движения руками",dose:"30 сек вперёд + 30 сек назад",description:"Подготавливают плечевые суставы.",technique:["Начни с небольшой амплитуды.","Постепенно увеличивай круги.","Не поднимай плечи к ушам."]},
+      {title:"Лопаточные отжимания",dose:"12 повторений",description:"Активируют мышцы вокруг лопаток.",technique:["Прими высокую планку.","Локти оставляй прямыми.","Оттолкни пол лопатками."]},
+      {title:"Выходы руками в планку",dose:"6 повторений",description:"Подготавливают плечи, пресс и заднюю поверхность ног.",technique:["Наклонись и поставь ладони на пол.","Переставляй руки до планки.","Вернись без рывка."]},
+      {title:"Ягодичный мост",dose:"15 повторений",description:"Активирует ягодицы и стабилизаторы таза.",technique:["Пятки поставь близко к тазу.","Поднимай таз усилием ягодиц.","Не переразгибай поясницу."]},
+      {title:"Медленные приседания",dose:"10 повторений",description:"Подготавливают колени, таз и голеностоп.",technique:["Опускайся три секунды.","Сделай паузу внизу.","Колени направляй по линии носков."]}
+    ];
+
+    const strengthExercises=[
+      {title:"Строгие отжимания",dose:"Весь рабочий интервал",description:"Грудь, трицепсы, плечи и корпус.",technique:["Ладони немного шире плеч.","Тело образует прямую линию.","Опускай грудь почти до пола.","Полностью выпрямляй руки."],variation:"Упрощение: с колен. Усложнение: пауза внизу."},
+      {title:"Приседания с контролем",dose:"Весь рабочий интервал",description:"Ноги и устойчивость тела под нагрузкой.",technique:["Три секунды опускайся.","Пауза внизу.","Не своди колени внутрь.","Сохраняй напряжение корпуса."]},
+      {title:"Отжимания уголком",dose:"Весь рабочий интервал",description:"Акцент на плечи.",technique:["Подними таз высоко.","Голову держи между руками.","Не разводи локти строго в стороны."]},
+      {title:"Обратные выпады на месте",dose:"Ноги чередуются",description:"Сила ног и устойчивость таза.",technique:["Сделай шаг назад.","Передняя пятка прижата.","Колено не заваливается внутрь."]},
+      {title:"Тяга лёжа для спины",dose:"Весь рабочий интервал",description:"Работа верхней части спины.",technique:["Ляг на живот.","Потяни локти назад и вниз.","Максимально сведи лопатки."]},
+      {title:"Полая позиция корпуса",dose:"Удержание весь интервал",description:"Пресс и контроль поясницы.",technique:["Прижми поясницу к полу.","Приподними плечи.","Удерживай ноги над полом.","Не задерживай дыхание."]}
+    ];
+
+    const controlExercises=[
+      {title:"Планка на предплечьях",dose:"Весь рабочий интервал",description:"Неподвижное и собранное положение тела.",technique:["Локти под плечами.","Не поднимай таз.","Напряги ягодицы и пресс."]},
+      {title:"Боковая планка слева",dose:"Весь рабочий интервал",description:"Боковая линия корпуса.",technique:["Левый локоть под плечом.","Подними таз.","Не разворачивай грудь к полу."]},
+      {title:"Боковая планка справа",dose:"Весь рабочий интервал",description:"Та же работа справа.",technique:["Правый локоть под плечом.","Не проваливайся в плече.","Таз остаётся поднятым."]},
+      {title:"Мост на одной ноге",dose:"Половина времени на каждую ногу",description:"Ягодицы и стабилизаторы таза.",technique:["Опорная пятка прижата.","Таз не разворачивается.","Вверху напряги ягодицу."]},
+      {title:"Y–T–W лёжа",dose:"Медленно весь интервал",description:"Верх спины и задняя поверхность плеч.",technique:["Ляг на живот.","Руки в Y, затем T и W.","В каждом положении своди лопатки."]}
+    ];
+
+    const cooldownExercises=[
+      {title:"Восстановление стоя",dose:"60 секунд",description:"Постепенно снижай пульс.",technique:["Опусти плечи.","Вдох через нос.","Длинный медленный выдох."]},
+      {title:"Поза ребёнка",dose:"45 секунд",description:"Расслабляет спину и плечи.",technique:["Опусти таз к пяткам.","Вытяни руки вперёд.","Дыши медленно."]},
+      {title:"Растяжка сгибателя бедра",dose:"По 40 секунд",description:"Снимает напряжение передней поверхности таза.",technique:["Встань в выпад на колене.","Слегка подкрути таз.","Не прогибай поясницу."]},
+      {title:"Финальное дыхание",dose:"90 секунд",description:"Переводит организм в восстановительный режим.",technique:["Вдыхай четыре секунды.","Выдыхай шесть–восемь секунд.","Не поднимай плечи."]}
+    ];
+
+    const $=id=>document.getElementById(id);
+    const homeScreen=$("homeScreen"),programScreen=$("programScreen"),levelGrid=$("levelGrid"),programSections=$("programSections");
+    let selectedLevel=levels.calibration,completedExercises=new Set(),timerInterval=null,timerRunning=false,timerPhaseState="work",timerSeconds=30,currentRound=1;
+
+    function renderLevels(){levelGrid.innerHTML=Object.values(levels).map(level=>`<button class="level-card" type="button" data-level="${level.id}" style="--level-color:${level.color};--level-soft:${level.soft}"><span class="level-number">${level.number}</span><div class="level-kicker">${level.short}</div><strong class="level-name">${level.name}</strong><div class="level-description">${level.description}</div><div class="level-meta"><span>${level.duration}</span><span>${level.work}/${level.rest}</span></div><span class="level-arrow">→</span></button>`).join("");levelGrid.querySelectorAll(".level-card").forEach(card=>card.addEventListener("click",()=>openProgram(card.dataset.level)))}
+    function openProgram(id){selectedLevel=levels[id]||levels.calibration;completedExercises=new Set();updateTheme();updateHeader();renderSections();updateProgress();configureTimer();homeScreen.classList.remove("active");programScreen.classList.add("active");scrollTo({top:0,behavior:"smooth"})}
+    function closeProgram(){stopTimer();programScreen.classList.remove("active");homeScreen.classList.add("active");scrollTo({top:0,behavior:"smooth"})}
+    function updateTheme(){const r=document.documentElement;r.style.setProperty("--selected",selectedLevel.color);r.style.setProperty("--selected-dark",selectedLevel.dark);r.style.setProperty("--selected-soft",selectedLevel.soft)}
+    function updateHeader(){$("rankLabel").textContent=selectedLevel.rank;$("programTitle").textContent=selectedLevel.name;$("programSubtitle").textContent=selectedLevel.subtitle;$("topbarLevelName").textContent=selectedLevel.name;$("durationStat").textContent=selectedLevel.duration;$("workStat").textContent=selectedLevel.work+" сек";$("restStat").textContent=selectedLevel.rest+" сек"}
+    function cards(exercises,sectionId){return exercises.map((e,i)=>{const id=sectionId+"-"+i;return `<article class="exercise-card" data-exercise-id="${id}"><div class="exercise-top"><span class="exercise-number">${String(i+1).padStart(2,"0")}</span><div class="exercise-heading"><strong class="exercise-title">${e.title}</strong><span class="exercise-dose">${e.dose}</span></div><button class="check-btn" data-check-id="${id}">✓</button></div><p class="exercise-description">${e.description}</p><ul class="technique-list">${e.technique.map(x=>`<li>${x}</li>`).join("")}</ul>${e.variation?`<div class="variation"><strong>Вариант:</strong> ${e.variation}</div>`:""}</article>`}).join("")}
+    function section(id,index,title,subtitle,instruction,content,open=false){return `<section class="program-section ${open?"open":""}"><button class="section-toggle" aria-expanded="${open}"><span class="section-index">${index}</span><span class="section-toggle-text"><strong>${title}</strong><small>${subtitle}</small></span><span class="chevron">⌄</span></button><div class="section-body"><div class="section-inner"><div class="section-content">${instruction?`<p class="instruction">${instruction}</p>`:""}${content}</div></div></div></section>`}
+    function renderSections(){const finisher=[{title:"Берпи на месте",dose:"3 повторения",description:"Контролируемый цикл без перемещения.",technique:["Ладони рядом со стопами.","Перейди в планку.","Верни стопы к рукам."]},{title:"Строгие отжимания",dose:"6 повторений",description:"Полная амплитуда.",technique:["Не опускай таз.","Выпрямляй руки вверху."]},{title:"Приседания",dose:"9 повторений",description:"Быстро, но под контролем.",technique:["Стопы на полу.","Колени по линии носков."]},{title:"Перекрёстный альпинист",dose:"12 движений",description:"Колено к противоположному локтю.",technique:["Плечи над кистями.","Не поднимай таз."]}];
+      programSections.innerHTML=[section("warmup","01","Активация системы","Разминка · около 10 минут","Выполняй всё последовательно без отдельного отдыха.",`<div class="exercise-list">${cards(warmupExercises,"warmup")}</div>`,true),section("strength","02","Силовая броня",`${selectedLevel.strengthRounds} круга · всё тело`,`Выполни все упражнения подряд. После круга отдыхай ${selectedLevel.strengthRoundRest} секунд.`,`<div class="exercise-list">${cards(strengthExercises,"strength")}</div>`),section("engine","03","Двигатель",`EMOM · ${selectedLevel.engineRounds*4} минут`,`Каждую новую минуту начинай указанное упражнение.`,`<div class="mini-grid"><article class="mini-card"><small>Минута 1</small><strong>Берпи</strong><span>${selectedLevel.burpees}</span></article><article class="mini-card"><small>Минута 2</small><strong>Альпинист</strong><span>${selectedLevel.climbers}</span></article><article class="mini-card"><small>Минута 3</small><strong>Выходы в планку</strong><span>${selectedLevel.walkouts}</span></article><article class="mini-card"><small>Минута 4</small><strong>Прямые удары</strong><span>${selectedLevel.punches}</span></article></div>`),section("control","04","Контроль под усталостью",`${selectedLevel.controlRounds} круга · корпус`,`Скорость не важна. Приоритет — положение тела и дыхание.`,`<div class="exercise-list">${cards(controlExercises,"control")}</div>`),section("finisher","05","Последний рубеж",`${selectedLevel.finisherMinutes} минут`,`Выполни максимум качественных кругов.`,`<div class="exercise-list">${cards(finisher,"finisher")}</div>`),section("cooldown","06","Возвращение в контроль","Заминка · около 6 минут","Постепенно снизь пульс и восстанови дыхание.",`<div class="exercise-list">${cards(cooldownExercises,"cooldown")}</div>`)].join("");
+      programSections.querySelectorAll(".section-toggle").forEach(b=>b.addEventListener("click",()=>{const s=b.closest(".program-section");s.classList.toggle("open");b.setAttribute("aria-expanded",String(s.classList.contains("open")))}));programSections.querySelectorAll(".check-btn").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const id=b.dataset.checkId,card=b.closest(".exercise-card");completedExercises.has(id)?completedExercises.delete(id):completedExercises.add(id);card.classList.toggle("completed",completedExercises.has(id));updateProgress()}))}
+    function updateProgress(){const total=programSections.querySelectorAll(".check-btn").length,done=completedExercises.size;$("progressText").textContent=`${done} из ${total}`;$("progressFill").style.width=total?`${done/total*100}%`:"0%"}
+    function showToast(m){$("toast").textContent=m;$("toast").classList.add("visible");clearTimeout(showToast.t);showToast.t=setTimeout(()=>$("toast").classList.remove("visible"),2200)}
+    function openTimer(){configureTimer();$("timerOverlay").classList.add("visible");document.body.style.overflow="hidden"}function closeTimer(){$("timerOverlay").classList.remove("visible");document.body.style.overflow=""}
+    function configureTimer(){stopTimer();$("workInput").value=selectedLevel.work;$("restInput").value=selectedLevel.rest;$("roundInput").value=selectedLevel.strengthRounds;timerPhaseState="work";currentRound=1;timerSeconds=selectedLevel.work;updateTimerDisplay()}
+    function settings(){return{work:Math.max(5,+$("workInput").value||selectedLevel.work),rest:Math.max(0,+$("restInput").value||selectedLevel.rest),rounds:Math.max(1,+$("roundInput").value||selectedLevel.strengthRounds)}}
+    function startOrPause(){if(timerRunning){pauseTimer();return}timerRunning=true;$("startTimerButton").textContent="Пауза";timerInterval=setInterval(()=>{timerSeconds--;if(timerSeconds<=0)advancePhase();updateTimerDisplay()},1000)}
+    function pauseTimer(){timerRunning=false;clearInterval(timerInterval);timerInterval=null;$("startTimerButton").textContent="Продолжить"}function stopTimer(){timerRunning=false;clearInterval(timerInterval);timerInterval=null;$("startTimerButton").textContent="Старт"}
+    function resetTimer(){stopTimer();const s=settings();timerPhaseState="work";currentRound=1;timerSeconds=s.work;updateTimerDisplay()}
+    function advancePhase(){const s=settings();if(timerPhaseState==="work"&&s.rest>0){timerPhaseState="rest";timerSeconds=s.rest}else{currentRound++;if(currentRound>s.rounds){stopTimer();timerPhaseState="done";timerSeconds=0;showToast("Интервальный блок завершён");return}timerPhaseState="work";timerSeconds=s.work}}
+    function updateTimerDisplay(){const s=settings();$("timerTime").textContent=String(Math.floor(Math.max(0,timerSeconds)/60)).padStart(2,"0")+":"+String(Math.max(0,timerSeconds)%60).padStart(2,"0");$("timerPhase").textContent=timerPhaseState==="work"?"Работа":timerPhaseState==="rest"?"Восстановление":"Завершено";$("timerRound").textContent=timerPhaseState==="done"?`${s.rounds} кругов выполнено`:`Круг ${currentRound} из ${s.rounds}`}
+
+    $("backButton").addEventListener("click",closeProgram);$("topTimerButton").addEventListener("click",openTimer);$("heroTimerButton").addEventListener("click",openTimer);$("closeTimerButton").addEventListener("click",closeTimer);$("startTimerButton").addEventListener("click",startOrPause);$("resetTimerButton").addEventListener("click",resetTimer);$("skipTimerButton").addEventListener("click",()=>{advancePhase();updateTimerDisplay()});$("resetProgressButton").addEventListener("click",()=>{completedExercises.clear();programSections.querySelectorAll(".completed").forEach(x=>x.classList.remove("completed"));updateProgress();showToast("Отметки сброшены")});$("timerOverlay").addEventListener("click",e=>{if(e.target===$("timerOverlay"))closeTimer()});
+    renderLevels();updateTheme();
+  </script>
+</body>
+</html>
