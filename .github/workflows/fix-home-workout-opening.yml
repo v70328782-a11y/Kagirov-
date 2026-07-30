@@ -1,0 +1,31 @@
+name: Fix Home Workout opening
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/fix_home_workout_opening.py"
+      - ".github/workflows/fix-home-workout-opening.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply fix
+        run: python scripts/fix_home_workout_opening.py
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html home-workout.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Fix Home Workout fullscreen opening"
+            git push
+          fi
