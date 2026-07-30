@@ -321,11 +321,35 @@
 
   
 
+    .home-fullscreen-close{
+      display:none;
+      position:fixed;
+      top:max(12px,env(safe-area-inset-top));
+      right:12px;
+      z-index:90;
+      width:46px;
+      height:46px;
+      padding:0;
+      border:1px solid rgba(101,67,47,.15);
+      border-radius:15px;
+      color:var(--accent-dark);
+      background:rgba(255,253,249,.96);
+      box-shadow:0 12px 34px rgba(83,53,34,.18);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      place-items:center;
+      font-size:25px;
+      line-height:1;
+      cursor:pointer;
+    }
+    body.parent-fullscreen #homeScreen.active .home-fullscreen-close{display:grid}
+
   </style>
 </head>
 <body>
   <main class="app">
     <section id="homeScreen" class="screen active">
+      <button id="homeFullscreenClose" class="home-fullscreen-close" type="button" aria-label="Закрыть полноэкранный режим">×</button>
       <article class="hero">
         <div class="hero-content">
           <div class="badge"><span class="badge-dot"></span>kagirov</div>
@@ -449,13 +473,13 @@
         const moved = Math.hypot(event.clientX - startPoint.x, event.clientY - startPoint.y);
         startPoint = null;
         if (moved > 10) return;
-        window.parent.postMessage({ type: 'kagirov-home-workout-expand' }, window.location.origin);
+        window.parent.postMessage({ type: 'kagirov-home-workout-expand', screen: 'home' }, window.location.origin);
       });
       hero.addEventListener('pointercancel', () => { startPoint = null; });
       hero.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          window.parent.postMessage({ type: 'kagirov-home-workout-expand' }, window.location.origin);
+          window.parent.postMessage({ type: 'kagirov-home-workout-expand', screen: 'home' }, window.location.origin);
         }
       });
     })();
@@ -463,6 +487,22 @@
 
 
 
+
+  <script>
+    (()=>{
+      "use strict";
+      const closeButton=document.getElementById("homeFullscreenClose");
+      window.addEventListener("message",event=>{
+        if(event.origin!==window.location.origin)return;
+        if(event.data?.type!=="kagirov-home-workout-fullscreen-state")return;
+        document.body.classList.toggle("parent-fullscreen",Boolean(event.data.fullscreen));
+      });
+      closeButton?.addEventListener("click",()=>{
+        document.body.classList.remove("parent-fullscreen");
+        window.parent.postMessage({type:"kagirov-home-workout-collapse"},window.location.origin);
+      });
+    })();
+  </script>
 
 </body>
 </html>
