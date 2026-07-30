@@ -307,6 +307,18 @@
 
     @media(max-width:410px){.app{padding-left:12px;padding-right:12px}.hero{padding:23px 20px}.level-grid{gap:9px}.level-card{min-height:226px;padding:16px}.program-hero{padding:22px 19px}}
     @media(min-width:690px){.level-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.level-card{min-height:260px}.hero{padding:36px}.program-hero{padding:34px}}
+
+    /* TAP HERO TO OPEN FULLSCREEN */
+    #homeScreen .hero {
+      cursor: pointer;
+      touch-action: pan-y;
+    }
+    #homeScreen .hero::selection { background: transparent; }
+    #homeScreen .hero:focus-visible {
+      outline: 4px solid rgba(131,93,69,.24);
+      outline-offset: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -410,5 +422,36 @@
     $("backButton").addEventListener("click",closeProgram);$("topTimerButton").addEventListener("click",openTimer);$("heroTimerButton").addEventListener("click",openTimer);$("closeTimerButton").addEventListener("click",closeTimer);$("startTimerButton").addEventListener("click",startOrPause);$("resetTimerButton").addEventListener("click",resetTimer);$("skipTimerButton").addEventListener("click",()=>{advancePhase();updateTimerDisplay()});$("resetProgressButton").addEventListener("click",()=>{completedExercises.clear();programSections.querySelectorAll(".completed").forEach(x=>x.classList.remove("completed"));updateProgress();showToast("Отметки сброшены")});$("timerOverlay").addEventListener("click",e=>{if(e.target===$("timerOverlay"))closeTimer()});
     renderLevels();updateTheme();
   </script>
+
+  <script>
+    (() => {
+      "use strict";
+      const hero = document.querySelector('#homeScreen .hero');
+      if (!hero) return;
+      hero.setAttribute('role', 'button');
+      hero.setAttribute('tabindex', '0');
+      hero.setAttribute('aria-label', 'Открыть домашнюю тренировку на весь экран');
+
+      let startPoint = null;
+      hero.addEventListener('pointerdown', event => {
+        startPoint = { x: event.clientX, y: event.clientY, id: event.pointerId };
+      });
+      hero.addEventListener('pointerup', event => {
+        if (!startPoint || startPoint.id !== event.pointerId) return;
+        const moved = Math.hypot(event.clientX - startPoint.x, event.clientY - startPoint.y);
+        startPoint = null;
+        if (moved > 10) return;
+        window.parent.postMessage({ type: 'kagirov-home-workout-expand' }, window.location.origin);
+      });
+      hero.addEventListener('pointercancel', () => { startPoint = null; });
+      hero.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          window.parent.postMessage({ type: 'kagirov-home-workout-expand' }, window.location.origin);
+        }
+      });
+    })();
+  </script>
+
 </body>
 </html>
