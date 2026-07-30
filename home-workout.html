@@ -399,9 +399,10 @@
     let selectedLevel=levels.calibration,completedExercises=new Set(),timerInterval=null,timerRunning=false,timerPhaseState="work",timerSeconds=30,currentRound=1;
 
     function renderLevels(){levelGrid.innerHTML=Object.values(levels).map(level=>`<button class="level-card" type="button" data-level="${level.id}" style="--level-color:${level.color};--level-soft:${level.soft}"><span class="level-number">${level.number}</span><div class="level-kicker">${level.short}</div><strong class="level-name">${level.name}</strong><div class="level-description">${level.description}</div><div class="level-meta"><span>${level.duration}</span><span>${level.work}/${level.rest}</span></div><span class="level-arrow">→</span></button>`).join("");levelGrid.querySelectorAll(".level-card").forEach(card=>card.addEventListener("click",()=>{
-      try{window.parent.postMessage({type:"kagirov-home-workout-expand"},window.location.origin)}catch(error){}
       const levelId=card.dataset.level;
-      setTimeout(()=>openProgram(levelId),520);
+      card.blur();
+      openProgram(levelId);
+      requestAnimationFrame(()=>window.parent.postMessage({type:"kagirov-home-workout-expand"},window.location.origin));
     }))}
     function openProgram(id){selectedLevel=levels[id]||levels.calibration;completedExercises=new Set();updateTheme();updateHeader();renderSections();updateProgress();configureTimer();homeScreen.classList.remove("active");programScreen.classList.add("active");scrollTo({top:0,behavior:"smooth"})}
     function closeProgram(){stopTimer();programScreen.classList.remove("active");homeScreen.classList.add("active");scrollTo({top:0,behavior:"smooth"})}
