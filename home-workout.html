@@ -319,9 +319,34 @@
       outline-offset: 4px;
     }
 
+  
+    .fullscreen-exit-back {
+      display: none;
+      position: fixed;
+      top: calc(12px + var(--safe-top));
+      left: 12px;
+      z-index: 120;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(101,67,47,.15);
+      border-radius: 15px;
+      color: var(--accent-dark);
+      background: rgba(255,253,249,.96);
+      box-shadow: var(--shadow-sm);
+      font-size: 23px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    body.parent-fullscreen #homeScreen.active .fullscreen-exit-back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
   </style>
 </head>
 <body>
+  <button id="fullscreenExitBack" class="fullscreen-exit-back" type="button" aria-label="Вернуться в основной сайт">←</button>
   <main class="app">
     <section id="homeScreen" class="screen active">
       <article class="hero">
@@ -454,6 +479,24 @@
           event.preventDefault();
           window.parent.postMessage({ type: 'kagirov-home-workout-expand' }, window.location.origin);
         }
+      });
+    })();
+  </script>
+
+
+  <script>
+    (() => {
+      "use strict";
+      const exitBack = document.getElementById("fullscreenExitBack");
+
+      window.addEventListener("message", event => {
+        if (event.origin !== window.location.origin) return;
+        if (event.data?.type !== "kagirov-home-workout-fullscreen-state") return;
+        document.body.classList.toggle("parent-fullscreen", Boolean(event.data.fullscreen));
+      });
+
+      exitBack?.addEventListener("click", () => {
+        window.parent.postMessage({ type: "kagirov-home-workout-collapse" }, window.location.origin);
       });
     })();
   </script>
