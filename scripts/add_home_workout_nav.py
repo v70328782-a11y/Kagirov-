@@ -89,7 +89,7 @@ nav_button = '''
         <path d="M5 8h14"></path>
         <path d="M8 8V5h8v3"></path>
       </svg>
-      <span>Домашняя</span>
+      <span>Домашняя тренировка</span>
     </button>
 
 '''
@@ -100,6 +100,7 @@ if 'data-view-target="home-workout"' not in text:
         raise SystemExit("Progress nav marker not found")
     text = text.replace(progress_nav, nav_button + progress_nav, 1)
 
+text = text.replace('<span>Домашняя</span>', '<span>Домашняя тренировка</span>', 1)
 text = text.replace('grid-template-columns: repeat(4,1fr);', 'grid-template-columns: repeat(5,1fr);', 1)
 text = text.replace('grid-template-columns: repeat(4, 1fr);', 'grid-template-columns: repeat(5, 1fr);', 1)
 
