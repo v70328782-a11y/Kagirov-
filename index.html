@@ -485,7 +485,7 @@
       padding: 8px;
       transform: translateX(-50%);
       display: grid;
-      grid-template-columns: repeat(4,1fr);
+      grid-template-columns: repeat(5,1fr);
       gap: 5px;
       border: 1px solid rgba(255,255,255,.11);
       border-radius: 24px;
@@ -1223,6 +1223,52 @@
     }
 
 
+
+    /* HOME WORKOUT PLATFORM */
+    .workout-platform-view {
+      min-height: calc(100svh - 120px);
+    }
+
+    .workout-platform-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 4px 2px 13px;
+    }
+
+    .workout-platform-head h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 24px;
+      letter-spacing: -.045em;
+    }
+
+    .workout-platform-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .workout-platform-frame {
+      display: block;
+      width: 100%;
+      height: calc(100svh - 190px);
+      min-height: 620px;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: #e7d3c0;
+      box-shadow: 0 17px 48px rgba(91,61,35,.12);
+    }
+
+    @media (max-width: 650px) {
+      .workout-platform-frame {
+        height: calc(100svh - 165px);
+        min-height: 560px;
+        border-radius: 20px;
+      }
+    }
+
   </style>
 </head>
 <body class="auth-locked">
@@ -1348,6 +1394,25 @@
         <div class="exercise-list" id="exerciseList"></div>
       </section>
 
+
+
+      <section class="view workout-platform-view" data-view="home-workout">
+        <div class="workout-platform-head">
+          <div>
+            <h2>Домашняя тренировка</h2>
+            <p>Отдельная платформа внутри kagirov: четыре ранга, упражнения и интервальный таймер</p>
+          </div>
+        </div>
+
+        <iframe
+          class="workout-platform-frame"
+          src="home-workout.html"
+          title="Домашняя тренировка"
+          loading="eager"
+          allow="autoplay"
+        ></iframe>
+      </section>
+
       <section class="view" data-view="progress">
         <div class="section-head"><div><h2>Прогресс</h2><p>История тренировок и расчёт белка</p></div></div>
         <div class="progress-grid">
@@ -1436,6 +1501,18 @@
   <nav class="bottom-nav" aria-label="Навигация">
     <button class="nav-btn active" data-view-target="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg><span>Главная</span></button>
     <button class="nav-btn" data-view-target="program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h8M8 15h5"></path></svg><span>Программа</span></button>
+
+    <button class="nav-btn" data-view-target="home-workout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20h16"></path>
+        <path d="M7 20v-5l2-2 2 2v5"></path>
+        <path d="M13 20v-8l2-2 2 2v8"></path>
+        <path d="M5 8h14"></path>
+        <path d="M8 8V5h8v3"></path>
+      </svg>
+      <span>Домашняя</span>
+    </button>
+
     <button class="nav-btn" data-view-target="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg><span>Прогресс</span></button>
     <button class="nav-btn" data-view-target="supplements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4M9 6h6M8 6v3l-3 4v7h14v-7l-3-4V6"></path><path d="M8 14h8"></path></svg><span>Добавки</span></button>
   </nav>
