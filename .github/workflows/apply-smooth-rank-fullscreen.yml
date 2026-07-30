@@ -1,0 +1,29 @@
+name: Apply smooth rank fullscreen
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/smooth_rank_fullscreen.py"
+      - ".github/workflows/apply-smooth-rank-fullscreen.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/smooth_rank_fullscreen.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html home-workout.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Make Home Workout fullscreen opening ultra smooth"
+            git push
+          fi
