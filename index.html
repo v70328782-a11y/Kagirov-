@@ -1289,7 +1289,9 @@
       filter: none !important;
     }
 
-  </style>
+  
+.coral-pop{position:fixed;left:50%;bottom:100px;z-index:999;width:min(420px,calc(100% - 24px));transform:translateX(-50%);padding:16px;border-radius:20px;background:#fffdf9;color:#634632;box-shadow:0 18px 55px rgba(70,45,28,.25);border:1px solid rgba(100,70,45,.16);display:none}.coral-pop.show{display:block}.coral-pop-top{display:flex;gap:10px;align-items:flex-start}.coral-pop-logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#dcefcf;color:#3f6c2d;font-weight:950}.coral-pop-copy{flex:1}.coral-pop-copy strong{display:block;font-size:15px}.coral-pop-copy p{margin:4px 0 0;font-size:11px;line-height:1.45;color:#806a58}.coral-pop-close{border:0;background:#eee5dc;border-radius:9px;width:30px;height:30px}.coral-pop-actions{display:flex;gap:8px;margin-top:12px}.coral-pop-actions button{flex:1;min-height:40px;border:0;border-radius:12px;font-weight:850}.coral-more{background:#77553e;color:white}.coral-later{background:#eee5dc;color:#6c503c}.coral-main{margin-bottom:16px;padding:24px;border-radius:26px;background:linear-gradient(135deg,#f2f8ec,#fffdf9);border:1px solid rgba(90,130,65,.2);color:#523c2d;box-shadow:0 16px 45px rgba(70,100,50,.12)}.coral-main h3{margin:10px 0 8px;font-size:36px;letter-spacing:-.05em}.coral-main p{margin:0;color:#786452;line-height:1.6;font-size:13px}.coral-tag{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#52763b}.coral-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}.coral-item{padding:12px;border-radius:15px;background:rgba(255,255,255,.75);border:1px solid rgba(90,130,65,.12)}.coral-item strong{display:block;font-size:12px}.coral-item span{display:block;margin-top:4px;font-size:10px;color:#836f5d;line-height:1.4}.coral-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.coral-links a{min-height:45px;padding:0 16px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:900;font-size:12px}.coral-reg{background:#668d4d;color:#fff}.coral-wa{background:#edf6e8;color:#397047;border:1px solid rgba(55,120,70,.18)}.coral-phone{margin-top:12px;font-size:11px;color:#806b59}@media(max-width:650px){.coral-grid{grid-template-columns:1fr}.coral-links a{width:100%}}
+</style>
 </head>
 <body>
 
@@ -1499,7 +1501,7 @@
         </section>
       </section>
 
-      <section class="view" data-view="supplements">
+      <section class="view" data-view="supplements"><article class="coral-main" id="coralClubBlock"><div class="coral-tag">Coral Club</div><h3>Поддержка активного образа жизни</h3><p>Продукты Coral Club для повседневного рациона, водного баланса и восстановления. Добавки не заменяют полноценное питание и медицинское лечение.</p><div class="coral-grid"><div class="coral-item"><strong>Водный баланс</strong><span>Поддержка удобного питьевого режима.</span></div><div class="coral-item"><strong>Рацион</strong><span>Продукты для дополнения ежедневного питания.</span></div><div class="coral-item"><strong>Консультация</strong><span>Связь через WhatsApp по ассортименту.</span></div></div><div class="coral-links"><a class="coral-reg" href="https://coral.club/8100919.html" target="_blank" rel="noopener">Зарегистрироваться</a><a class="coral-wa" href="https://wa.me/79640741621" target="_blank" rel="noopener">Написать в WhatsApp</a></div><div class="coral-phone">WhatsApp: +7 964 074 16 21</div></article>
         <div class="section-head"><div><h2>Добавки</h2><p>Простой режим без лишних банок</p></div></div>
         <div class="supp-grid">
           <article class="supp-card"><div class="supp-icon">🥛</div><h3>Протеин</h3><p>Используй как удобный способ добрать суточный белок. Основу рациона должна составлять обычная еда.</p><div class="supp-dose">25–30 г за порцию</div></article>
@@ -1518,7 +1520,7 @@
     </main>
   </div>
 
-  <nav class="bottom-nav" aria-label="Навигация">
+  <aside class="coral-pop" id="coralPop"><div class="coral-pop-top"><div class="coral-pop-logo">C</div><div class="coral-pop-copy"><strong>Coral Club</strong><p>Добавки для рациона, восстановления и активного образа жизни.</p></div><button class="coral-pop-close" id="coralPopClose">×</button></div><div class="coral-pop-actions"><button class="coral-later" id="coralLater">Позже</button><button class="coral-more" id="coralMore">Узнать больше</button></div></aside><nav class="bottom-nav" aria-label="Навигация">
     <button class="nav-btn active" data-view-target="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg><span>Главная</span></button>
     <button class="nav-btn" data-view-target="program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h8M8 15h5"></path></svg><span>Программа</span></button>
 
@@ -2455,5 +2457,5 @@
     })();
   </script>
 
-</body>
+<script>(()=>{const b=document.getElementById("coralPop");const hide=()=>b&&b.classList.remove("show");document.getElementById("coralPopClose")?.addEventListener("click",hide);document.getElementById("coralLater")?.addEventListener("click",hide);document.getElementById("coralMore")?.addEventListener("click",()=>{hide();document.querySelector('[data-view-target="supplements"]')?.click();setTimeout(()=>document.getElementById("coralClubBlock")?.scrollIntoView({behavior:"smooth"}),150)});addEventListener("load",()=>setTimeout(()=>b?.classList.add("show"),600),{once:true})})();</script></body>
 </html>
