@@ -1,0 +1,15 @@
+name: Coral
+on: [push]
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python scripts/add_coral_banner.py
+      - run: |
+          git config user.name github-actions
+          git config user.email actions@github.com
+          git add index.html
+          git diff --cached --quiet || (git commit -m "Add Coral Club banners" && git push)
