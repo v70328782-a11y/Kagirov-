@@ -1291,6 +1291,8 @@
 
   
 .coral-pop{position:fixed;left:50%;bottom:100px;z-index:999;width:min(420px,calc(100% - 24px));transform:translateX(-50%);padding:16px;border-radius:20px;background:#fffdf9;color:#634632;box-shadow:0 18px 55px rgba(70,45,28,.25);border:1px solid rgba(100,70,45,.16);display:none}.coral-pop.show{display:block}.coral-pop-top{display:flex;gap:10px;align-items:flex-start}.coral-pop-logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#dcefcf;color:#3f6c2d;font-weight:950}.coral-pop-copy{flex:1}.coral-pop-copy strong{display:block;font-size:15px}.coral-pop-copy p{margin:4px 0 0;font-size:11px;line-height:1.45;color:#806a58}.coral-pop-close{border:0;background:#eee5dc;border-radius:9px;width:30px;height:30px}.coral-pop-actions{display:flex;gap:8px;margin-top:12px}.coral-pop-actions button{flex:1;min-height:40px;border:0;border-radius:12px;font-weight:850}.coral-more{background:#77553e;color:white}.coral-later{background:#eee5dc;color:#6c503c}.coral-main{margin-bottom:16px;padding:24px;border-radius:26px;background:linear-gradient(135deg,#f2f8ec,#fffdf9);border:1px solid rgba(90,130,65,.2);color:#523c2d;box-shadow:0 16px 45px rgba(70,100,50,.12)}.coral-main h3{margin:10px 0 8px;font-size:36px;letter-spacing:-.05em}.coral-main p{margin:0;color:#786452;line-height:1.6;font-size:13px}.coral-tag{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#52763b}.coral-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}.coral-item{padding:12px;border-radius:15px;background:rgba(255,255,255,.75);border:1px solid rgba(90,130,65,.12)}.coral-item strong{display:block;font-size:12px}.coral-item span{display:block;margin-top:4px;font-size:10px;color:#836f5d;line-height:1.4}.coral-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.coral-links a{min-height:45px;padding:0 16px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:900;font-size:12px}.coral-reg{background:#668d4d;color:#fff}.coral-wa{background:#edf6e8;color:#397047;border:1px solid rgba(55,120,70,.18)}.coral-phone{margin-top:12px;font-size:11px;color:#806b59}@media(max-width:650px){.coral-grid{grid-template-columns:1fr}.coral-links a{width:100%}}
+
+.coral-expand{width:100%;min-height:44px;margin-top:15px;border:1px solid rgba(90,130,65,.18);border-radius:14px;background:#eef6e9;color:#4d7139;font-weight:900;cursor:pointer}.coral-expand:active{transform:scale(.99)}.coral-details{margin-top:13px}.coral-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.coral-detail-card{padding:14px;border-radius:16px;background:rgba(255,255,255,.82);border:1px solid rgba(90,130,65,.12)}.coral-detail-card strong{display:block;font-size:12px;color:#4e392c}.coral-detail-card p{margin:6px 0 0;font-size:11px;line-height:1.55;color:#7c6958}.coral-detail-note{margin-top:10px;padding:11px 13px;border-radius:13px;background:rgba(102,141,77,.08);color:#6e5b4c;font-size:10px;line-height:1.5}@media(max-width:650px){.coral-detail-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1501,7 +1503,34 @@
         </section>
       </section>
 
-      <section class="view" data-view="supplements"><article class="coral-main" id="coralClubBlock"><div class="coral-tag">Coral Club</div><h3>Поддержка активного образа жизни</h3><p>Продукты Coral Club для повседневного рациона, водного баланса и восстановления. Добавки не заменяют полноценное питание и медицинское лечение.</p><div class="coral-grid"><div class="coral-item"><strong>Водный баланс</strong><span>Поддержка удобного питьевого режима.</span></div><div class="coral-item"><strong>Рацион</strong><span>Продукты для дополнения ежедневного питания.</span></div><div class="coral-item"><strong>Консультация</strong><span>Связь через WhatsApp по ассортименту.</span></div></div><div class="coral-links"><a class="coral-reg" href="https://coral.club/8100919.html" target="_blank" rel="noopener">Зарегистрироваться</a><a class="coral-wa" href="https://wa.me/79640741621" target="_blank" rel="noopener">Написать в WhatsApp</a></div><div class="coral-phone">WhatsApp: +7 964 074 16 21</div></article>
+      <section class="view" data-view="supplements"><article class="coral-main" id="coralClubBlock">
+  <div class="coral-tag">Coral Club</div>
+  <h3>Поддержка восстановления, набора массы и активного образа жизни</h3>
+  <p>Подбор продуктов Coral Club под цели тренировок, повседневного рациона, водного баланса, контроля калорийности и удобного добора питательных веществ.</p>
+
+  <div class="coral-grid">
+    <div class="coral-item"><strong>Восстановление</strong><span>Решения для поддержки рациона после тренировок и в периоды высокой нагрузки.</span></div>
+    <div class="coral-item"><strong>Набор массы</strong><span>Удобные продукты для повышения калорийности и добора белка в течение дня.</span></div>
+    <div class="coral-item"><strong>Водный баланс</strong><span>Продукты для более удобного питьевого режима дома, на работе и во время тренировок.</span></div>
+  </div>
+
+  <button class="coral-expand" id="coralExpand" type="button" aria-expanded="false" aria-controls="coralDetails">Развернуть подробнее</button>
+
+  <div class="coral-details" id="coralDetails" hidden>
+    <div class="coral-detail-grid">
+      <div class="coral-detail-card"><strong>Для восстановления после нагрузок</strong><p>Подбор продуктов, которые удобно встроить в послетренировочный рацион: источники белка, напитки, продукты для восполнения энергии и ежедневного питания.</p></div>
+      <div class="coral-detail-card"><strong>Для набора веса и мышечной массы</strong><p>Подходящие варианты для тех, кому сложно добирать калории обычной едой: дополнительные приёмы питания, белковые продукты и удобные решения для плотного рациона.</p></div>
+      <div class="coral-detail-card"><strong>Для контроля питания</strong><p>Продукты, которые помогают сделать рацион более организованным: понятные порции, удобный формат и возможность заранее планировать питание на день.</p></div>
+      <div class="coral-detail-card"><strong>Для активного дня</strong><p>Решения для тренировок, работы, учёбы и поездок, когда важно не пропускать питание и поддерживать стабильный режим.</p></div>
+      <div class="coral-detail-card"><strong>Для питьевого режима</strong><p>Продукты и аксессуары Coral Club, которые помогают сделать регулярное употребление воды более удобной привычкой.</p></div>
+      <div class="coral-detail-card"><strong>Персональный подбор</strong><p>Можно написать в WhatsApp, описать цель, режим тренировок и особенности рациона, чтобы получить помощь с выбором подходящих продуктов.</p></div>
+    </div>
+    <div class="coral-detail-note">Результат зависит от общего рациона, тренировочной программы, режима сна и регулярности применения.</div>
+  </div>
+
+  <div class="coral-links"><a class="coral-reg" href="https://coral.club/8100919.html" target="_blank" rel="noopener">Зарегистрироваться</a><a class="coral-wa" href="https://wa.me/79640741621" target="_blank" rel="noopener">Написать в WhatsApp</a></div>
+  <div class="coral-phone">WhatsApp: +7 964 074 16 21</div>
+</article>
         <div class="section-head"><div><h2>Добавки</h2><p>Простой режим без лишних банок</p></div></div>
         <div class="supp-grid">
           <article class="supp-card"><div class="supp-icon">🥛</div><h3>Протеин</h3><p>Используй как удобный способ добрать суточный белок. Основу рациона должна составлять обычная еда.</p><div class="supp-dose">25–30 г за порцию</div></article>
@@ -2457,5 +2486,5 @@
     })();
   </script>
 
-<script>(()=>{const b=document.getElementById("coralPop");const hide=()=>b&&b.classList.remove("show");document.getElementById("coralPopClose")?.addEventListener("click",hide);document.getElementById("coralLater")?.addEventListener("click",hide);document.getElementById("coralMore")?.addEventListener("click",()=>{hide();document.querySelector('[data-view-target="supplements"]')?.click();setTimeout(()=>document.getElementById("coralClubBlock")?.scrollIntoView({behavior:"smooth"}),150)});addEventListener("load",()=>setTimeout(()=>b?.classList.add("show"),600),{once:true})})();</script></body>
+<script>(()=>{const b=document.getElementById("coralPop");const hide=()=>b&&b.classList.remove("show");document.getElementById("coralPopClose")?.addEventListener("click",hide);document.getElementById("coralLater")?.addEventListener("click",hide);document.getElementById("coralMore")?.addEventListener("click",()=>{hide();document.querySelector('[data-view-target="supplements"]')?.click();setTimeout(()=>document.getElementById("coralClubBlock")?.scrollIntoView({behavior:"smooth"}),150)});addEventListener("load",()=>setTimeout(()=>b?.classList.add("show"),600),{once:true})})();</script><script>(()=>{const btn=document.getElementById("coralExpand"),details=document.getElementById("coralDetails");btn?.addEventListener("click",()=>{const open=btn.getAttribute("aria-expanded")==="true";btn.setAttribute("aria-expanded",String(!open));details.hidden=open;btn.textContent=open?"Развернуть подробнее":"Свернуть подробности"})})();</script></body>
 </html>
