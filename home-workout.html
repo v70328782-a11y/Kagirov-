@@ -751,7 +751,7 @@
         updateProgress();
       }));
     }
-    function updateProgress({const total=programSections.querySelectorAll(".check-btn").length,done=completedExercises.size;$("progressText").textContent=`${done} из ${total}`;$("progressFill").style.width=total?`${done/total*100}%`:"0%"}
+    function updateProgress(){const total=programSections.querySelectorAll(".check-btn").length,done=completedExercises.size;$("progressText").textContent=`${done} из ${total}`;$("progressFill").style.width=total?`${done/total*100}%`:"0%"}
     function showToast(m){$("toast").textContent=m;$("toast").classList.add("visible");clearTimeout(showToast.t);showToast.t=setTimeout(()=>$("toast").classList.remove("visible"),2200)}
     function openTimer(){configureTimer();$("timerOverlay").classList.add("visible");document.body.style.overflow="hidden"}function closeTimer(){$("timerOverlay").classList.remove("visible");document.body.style.overflow=""}
     function configureTimer(){stopTimer();$("workInput").value=selectedLevel.work;$("restInput").value=selectedLevel.rest;$("roundInput").value=selectedLevel.strengthRounds;timerPhaseState="work";currentRound=1;timerSeconds=selectedLevel.work;updateTimerDisplay()}
