@@ -480,12 +480,12 @@
       left: 50%;
       bottom: max(11px, env(safe-area-inset-bottom));
       z-index: 50;
-      width: min(690px, calc(100% - 22px));
+      width: min(780px, calc(100% - 22px));
       height: var(--nav-h);
       padding: 8px;
       transform: translateX(-50%);
       display: grid;
-      grid-template-columns: repeat(5,1fr);
+      grid-template-columns: repeat(6,1fr);
       gap: 5px;
       border: 1px solid rgba(255,255,255,.11);
       border-radius: 24px;
@@ -1377,6 +1377,15 @@
           </div>
         </div>
 
+        <article class="women-entry-card" id="womenHomeEntry">
+          <div>
+            <span class="women-entry-badge">Отдельная программа</span>
+            <h3>BODY MODE · для женщин</h3>
+            <p>Зал и дом, набор и снижение жира, питание, таймер и дневник прогресса в отдельном пространстве.</p>
+          </div>
+          <button class="btn btn-primary" data-go="women">Открыть</button>
+        </article>
+
         <div class="stats-grid">
           <div class="stat"><div class="stat-label">Тренировок завершено</div><div class="stat-value" id="statWorkouts">0</div><div class="stat-note">За всё время</div></div>
           <div class="stat"><div class="stat-label">Подходов выполнено</div><div class="stat-value" id="statSets">0</div><div class="stat-note">По истории тренировок</div></div>
@@ -1435,6 +1444,16 @@
           loading="eager"
           allow="autoplay"
         ></iframe>
+      </section>
+
+      <section class="view workout-platform-view" data-view="women">
+        <div class="workout-platform-head">
+          <div>
+            <h2>Женщинам · BODY MODE</h2>
+            <p>Отдельная система: тренировки в зале и дома, питание, цели, таймер и дневник прогресса</p>
+          </div>
+        </div>
+        <iframe class="workout-platform-frame women-platform-frame" src="women-body-mode.html?v=1" title="BODY MODE — женский фитнес" loading="eager"></iframe>
       </section>
 
       <section class="view" data-view="progress">
@@ -1549,7 +1568,7 @@
     </main>
   </div>
 
-  <aside class="coral-pop" id="coralPop"><div class="coral-pop-top"><div class="coral-pop-logo">C</div><div class="coral-pop-copy"><strong>Coral Club</strong><p>Добавки для рациона, восстановления и активного образа жизни.</p></div><button class="coral-pop-close" id="coralPopClose">×</button></div><div class="coral-pop-actions"><button class="coral-later" id="coralLater">Позже</button><button class="coral-more" id="coralMore">Узнать больше</button></div></aside><nav class="bottom-nav" aria-label="Навигация">
+  <nav class="bottom-nav" aria-label="Навигация">
     <button class="nav-btn active" data-view-target="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg><span>Главная</span></button>
     <button class="nav-btn" data-view-target="program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h8M8 15h5"></path></svg><span>Программа</span></button>
 
@@ -1564,6 +1583,7 @@
       <span>Домашняя тренировка</span>
     </button>
 
+    <button class="nav-btn" data-view-target="women"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M12 12v9M8.5 17h7"></path></svg><span>Женщинам</span></button>
     <button class="nav-btn" data-view-target="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg><span>Прогресс</span></button>
     <button class="nav-btn" data-view-target="supplements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4M9 6h6M8 6v3l-3 4v7h14v-7l-3-4V6"></path><path d="M8 14h8"></path></svg><span>Добавки</span></button>
   </nav>
@@ -2486,5 +2506,5 @@
     })();
   </script>
 
-<script>(()=>{const b=document.getElementById("coralPop");const hide=()=>b&&b.classList.remove("show");document.getElementById("coralPopClose")?.addEventListener("click",hide);document.getElementById("coralLater")?.addEventListener("click",hide);document.getElementById("coralMore")?.addEventListener("click",()=>{hide();document.querySelector('[data-view-target="supplements"]')?.click();setTimeout(()=>document.getElementById("coralClubBlock")?.scrollIntoView({behavior:"smooth"}),150)});addEventListener("load",()=>setTimeout(()=>b?.classList.add("show"),600),{once:true})})();</script><script>(()=>{const btn=document.getElementById("coralExpand"),details=document.getElementById("coralDetails");btn?.addEventListener("click",()=>{const open=btn.getAttribute("aria-expanded")==="true";btn.setAttribute("aria-expanded",String(!open));details.hidden=open;btn.textContent=open?"Развернуть подробнее":"Свернуть подробности"})})();</script></body>
+<script>(()=>{const btn=document.getElementById("coralExpand"),details=document.getElementById("coralDetails");btn?.addEventListener("click",()=>{const open=btn.getAttribute("aria-expanded")==="true";btn.setAttribute("aria-expanded",String(!open));details.hidden=open;btn.textContent=open?"Развернуть подробнее":"Свернуть подробности"})})();</script></body>
 </html>
