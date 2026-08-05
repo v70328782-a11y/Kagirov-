@@ -1,7 +1,0 @@
-KAGIROV SITE VALIDATION
-=======================
-index.html: 79 ids, 6 inline scripts checked
-home-workout.html: 30 ids, 3 inline scripts checked
-women-body-mode.html: 52 ids, 1 inline scripts checked
-
-PASS: no structural, local-link, duplicate-id, or inline-JavaScript syntax errors found.
