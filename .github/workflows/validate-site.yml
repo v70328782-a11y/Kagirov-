@@ -1,0 +1,36 @@
+name: Validate complete site
+on:
+  push:
+    branches: ["site-working"]
+    paths:
+      - "index.html"
+      - "home-workout.html"
+      - "women-body-mode.html"
+      - "scripts/validate_site.py"
+      - ".github/workflows/validate-site.yml"
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate HTML integration and JavaScript syntax
+        id: validate
+        continue-on-error: true
+        run: python scripts/validate_site.py
+      - name: Commit validation report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add validation-report.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Update site validation report"
+            git push
+          fi
+      - name: Fail when validator found errors
+        if: steps.validate.outcome == 'failure'
+        run: exit 1
