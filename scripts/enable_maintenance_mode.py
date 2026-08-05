@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# Triggered maintenance lock deployment.
 p = Path('index.html')
 s = p.read_text(encoding='utf-8')
 
@@ -81,7 +82,6 @@ if 'id="maintenanceScreen"' not in s:
 else:
     s = s.replace('<body>', '<body class="maintenance-locked">', 1)
 
-# prevent accidental duplicate class problems
 s = s.replace('<body class="auth-locked">', '<body class="maintenance-locked">', 1)
 
 required = ['KAGIROV MAINTENANCE MODE','id="maintenanceScreen"','2 часа 30 минут','class="maintenance-locked"']
