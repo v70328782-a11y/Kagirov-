@@ -1,0 +1,24 @@
+name: Remove women home banner
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/remove_women_home_banner.py"
+      - ".github/workflows/remove-women-home-banner.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove banner
+        run: python scripts/remove_women_home_banner.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Remove BODY MODE banner from home screen"
+          git push
