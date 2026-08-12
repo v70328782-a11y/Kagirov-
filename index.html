@@ -480,12 +480,12 @@
       left: 50%;
       bottom: max(11px, env(safe-area-inset-bottom));
       z-index: 50;
-      width: min(780px, calc(100% - 22px));
+      width: min(690px, calc(100% - 22px));
       height: var(--nav-h);
       padding: 8px;
       transform: translateX(-50%);
       display: grid;
-      grid-template-columns: repeat(6,1fr);
+      grid-template-columns: repeat(5,1fr);
       gap: 5px;
       border: 1px solid rgba(255,255,255,.11);
       border-radius: 24px;
@@ -1435,17 +1435,6 @@
           allow="autoplay"
         ></iframe>
       </section>
-
-      <section class="view workout-platform-view" data-view="women">
-        <div class="workout-platform-head">
-          <div>
-            <h2>Женщинам · BODY MODE</h2>
-            <p>Отдельная система: тренировки в зале и дома, питание, цели, таймер и дневник прогресса</p>
-          </div>
-        </div>
-        <iframe class="workout-platform-frame women-platform-frame" src="women-body-mode.html?v=1" title="BODY MODE — женский фитнес" loading="eager"></iframe>
-      </section>
-
       <section class="view" data-view="progress">
         <div class="section-head"><div><h2>Прогресс</h2><p>История тренировок и расчёт белка</p></div></div>
         <div class="progress-grid">
@@ -1572,9 +1561,7 @@
       </svg>
       <span>Домашняя тренировка</span>
     </button>
-
-    <button class="nav-btn" data-view-target="women"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M12 12v9M8.5 17h7"></path></svg><span>Женщинам</span></button>
-    <button class="nav-btn" data-view-target="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg><span>Прогресс</span></button>
+<button class="nav-btn" data-view-target="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg><span>Прогресс</span></button>
     <button class="nav-btn" data-view-target="supplements"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4M9 6h6M8 6v3l-3 4v7h14v-7l-3-4V6"></path><path d="M8 14h8"></path></svg><span>Добавки</span></button>
   </nav>
 
